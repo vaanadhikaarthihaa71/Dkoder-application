@@ -135,7 +135,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="rounded-2xl overflow-hidden border border-[#E8E2EF] bg-white shadow-sm">
             <video
               ref={videoRef}
-              src="/assets/aistudio/Robot_welcoming_animation_video_1080p_20261024001749_31b5fafa.mp4"
+              src="/assets/aistudio/Robot_welcoming_animation_video_1080p_20261024001749_gwr_video_mvp_4a1dbe57.mp4"
               autoPlay
               loop
               muted
