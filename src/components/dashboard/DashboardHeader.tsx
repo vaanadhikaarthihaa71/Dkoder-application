@@ -143,17 +143,19 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             <div className="relative">
               <button
                 type="button"
-                onClick={() => setShowNotificationToast(!showNotificationToast)}
-                className="p-2 rounded-xl border border-[#E8E2EF] bg-white text-[#6F687A] hover:text-[#5425A8] hover:bg-[#FAF8FD] transition-colors relative cursor-pointer interactive-tap"
+                onClick={() => {
+                  setShowNotificationToast(!showNotificationToast);
+                }}
+                className="p-2 rounded-xl border border-[#E8E2EF] bg-white text-[#6F687A] hover:text-[#5425A8] hover:border-[#5425A8]/40 hover:bg-[#FAF8FD] transition-all relative cursor-pointer interactive-tap group"
                 title="Notifications"
                 aria-label="View notifications"
               >
-                <Bell className="w-4 h-4" />
-                <span className="w-2 h-2 rounded-full bg-[#5425A8] absolute top-1.5 right-1.5 ring-2 ring-white" />
+                <Bell className={`w-4 h-4 transition-transform ${showNotificationToast ? 'animate-bell-ring text-[#5425A8]' : 'group-hover:rotate-12'}`} />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#5425A8] absolute top-1 right-1 ring-2 ring-white animate-pulse" />
               </button>
 
               {showNotificationToast && (
-                <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-white border border-[#E8E2EF] shadow-2xl p-3.5 z-50 text-xs animate-word">
+                <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-white/95 backdrop-blur-xl border border-[#E8E2EF] shadow-2xl p-3.5 z-50 text-xs spring-dropdown">
                   <div className="flex items-center justify-between pb-2 border-b border-[#E8E2EF]">
                     <span className="font-bold text-[#211B2B]">Notifications</span>
                     <span className="text-[10px] text-[#5425A8] font-bold px-1.5 py-0.5 rounded-full bg-[#F3EDFF]">1 New</span>

@@ -182,19 +182,26 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                     type="button"
                     onClick={() => handleItemClick(item.id)}
                     title={isCollapsed ? item.label : undefined}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                    className={`group relative w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer interactive-tap ${
                       isActive
-                        ? 'bg-[#5425A8] text-white shadow-xs'
+                        ? 'bg-[#5425A8] text-white shadow-md'
                         : 'text-[#6F687A] hover:text-[#211B2B] hover:bg-[#FAF8FD]'
                     } ${isCollapsed ? 'justify-center px-2' : 'justify-between'}`}
                   >
+                    {/* Animated Purple/Gold Active Selection Indicator Pill */}
+                    {isActive && (
+                      <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-[#FFD84D] rounded-r-full shadow-xs animate-word" />
+                    )}
+
                     <div className="flex items-center gap-2.5 truncate">
-                      <IconComponent className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#FFD84D]' : 'text-[#706879]'}`} />
+                      <div className="shrink-0 transition-transform duration-200 group-hover:scale-115 group-hover:rotate-6 group-active:scale-85">
+                        <IconComponent className={`w-4 h-4 ${isActive ? 'text-[#FFD84D]' : 'text-[#706879] group-hover:text-[#5425A8]'}`} />
+                      </div>
                       {!isCollapsed && <span className="truncate">{item.label}</span>}
                     </div>
 
                     {!isCollapsed && item.badge && (
-                      <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#FFD84D] text-[#211B2B]">
+                      <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#FFD84D] text-[#211B2B] animate-pulse">
                         {item.badge}
                       </span>
                     )}

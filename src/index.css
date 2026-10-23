@@ -66,10 +66,10 @@
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(-3deg);
+    transform: rotate(-4deg);
   }
   75% {
-    transform: rotate(3deg);
+    transform: rotate(4deg);
   }
 }
 
@@ -91,6 +91,60 @@
     opacity: 0.75;
     transform: scale(0.97);
   }
+}
+
+/* Bell Shake Keyframes */
+@keyframes bellShake {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(16deg); }
+  40% { transform: rotate(-14deg); }
+  60% { transform: rotate(10deg); }
+  80% { transform: rotate(-6deg); }
+}
+
+.animate-bell-ring {
+  animation: bellShake 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+/* Icon Pop & Bounce Keyframes */
+@keyframes popBounce {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.32); }
+  80% { transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+
+.animate-pop {
+  animation: popBounce 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Elastic Icon Click Keyframes */
+@keyframes iconBounce {
+  0% { transform: scale(1); }
+  35% { transform: scale(0.85) rotate(-5deg); }
+  70% { transform: scale(1.15) rotate(4deg); }
+  100% { transform: scale(1); }
+}
+
+.animate-icon-click {
+  animation: iconBounce 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Spring Dropdown Entrance */
+@keyframes springDropdown {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.spring-dropdown {
+  transform-origin: top right;
+  animation: springDropdown 0.26s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 .animate-kody-float {
@@ -123,16 +177,18 @@
   animation: wordEntrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Smooth Scroll Reveals */
+/* Smooth Scroll Reveals with Blur-to-Sharp Transition */
 .reveal-init {
   opacity: 0;
+  filter: blur(5px);
   transform: translateY(22px);
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
 }
 
 .reveal-visible {
   opacity: 1;
+  filter: blur(0px);
   transform: translateY(0);
 }
 
@@ -154,6 +210,59 @@
 .stagger-3 { transition-delay: 180ms; }
 .stagger-4 { transition-delay: 240ms; }
 .stagger-5 { transition-delay: 300ms; }
+
+/* Refined Moving Light Sheen on Primary Buttons */
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+}
+
+.btn-sheen:hover::after {
+  left: 150%;
+  transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Animated Underline for Text Links */
+.link-underline-hover {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.link-underline-hover::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-underline-hover:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
 
 /* Micro-Interactions for Buttons & Interactive Badges */
 .interactive-tap {
@@ -199,24 +308,41 @@
   background: #D4CBDF;
 }
 
-/* Consistent subtle card shadow */
+/* Consistent subtle card shadow & Hover elevation */
 .card-subtle-shadow {
   box-shadow: 0 1px 3px 0 rgba(33, 27, 43, 0.04), 0 1px 2px -1px rgba(33, 27, 43, 0.04);
 }
 
 .card-hover-shadow {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
 }
 
 .card-hover-shadow:hover {
-  box-shadow: 0 12px 28px -6px rgba(84, 37, 168, 0.09), 0 8px 12px -6px rgba(84, 37, 168, 0.05);
-  border-color: #D4CBDF;
-  transform: translateY(-3px);
+  box-shadow: 0 14px 30px -6px rgba(84, 37, 168, 0.11), 0 8px 12px -6px rgba(84, 37, 168, 0.06);
+  border-color: #5425A8;
+  transform: translateY(-4px);
 }
 
 /* Perspective Tilt Containers */
 .perspective-1000 {
   perspective: 1000px;
+}
+
+/* Section transition flourish */
+.section-flourish {
+  position: relative;
+}
+
+.section-flourish::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #FFD84D, #5425A8, transparent);
+  pointer-events: none;
 }
 
 /* Accessibility: Respect Reduced Motion */
@@ -233,15 +359,20 @@
   .animate-kody-float,
   .animate-kody-glow,
   .animate-word,
-  .animate-marquee {
+  .animate-marquee,
+  .animate-bell-ring,
+  .animate-pop,
+  .animate-icon-click {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;
+    filter: none !important;
   }
   
   .reveal-init,
   .reveal-scale-init {
     opacity: 1 !important;
     transform: none !important;
+    filter: none !important;
   }
 }

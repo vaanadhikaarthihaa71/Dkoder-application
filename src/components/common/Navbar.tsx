@@ -225,7 +225,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
 
               {/* Profile Dropdown */}
               {isProfileDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-[#E8E2EF] p-4 z-50 transform origin-top transition-all duration-200 animate-word">
+                <div className="absolute right-0 mt-2 w-64 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-[#E8E2EF] p-4 z-50 spring-dropdown">
                   <div className="flex items-center gap-3 pb-3 border-b border-[#E8E2EF]">
                     <div className="w-10 h-10 rounded-xl bg-[#5425A8] text-white font-bold flex items-center justify-center text-sm shadow-xs">
                       VK
@@ -250,16 +250,16 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
                   <div className="space-y-1">
                     <button
                       onClick={() => handleNavClick('/dashboard')}
-                      className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold text-[#211B2B] hover:bg-[#F3EDFF] hover:text-[#5425A8] text-left transition-colors cursor-pointer"
+                      className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold text-[#211B2B] hover:bg-[#F3EDFF] hover:text-[#5425A8] text-left transition-colors cursor-pointer group"
                     >
-                      <LayoutDashboard className="w-4 h-4 text-[#5425A8]" />
+                      <LayoutDashboard className="w-4 h-4 text-[#5425A8] group-hover:scale-110 transition-transform" />
                       <span>Student Dashboard</span>
                     </button>
                     <button
                       onClick={() => handleNavClick('/student/subscription')}
-                      className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold text-[#211B2B] hover:bg-[#F3EDFF] hover:text-[#5425A8] text-left transition-colors cursor-pointer"
+                      className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold text-[#211B2B] hover:bg-[#F3EDFF] hover:text-[#5425A8] text-left transition-colors cursor-pointer group"
                     >
-                      <Sparkles className="w-4 h-4 text-[#5425A8]" />
+                      <Sparkles className="w-4 h-4 text-[#5425A8] group-hover:scale-110 transition-transform" />
                       <span>Manage Subscription</span>
                     </button>
                   </div>
@@ -279,7 +279,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
             </Button>
           </div>
 
-          {/* Mobile menu toggle */}
+          {/* Mobile menu toggle with animated morphing Hamburger -> X */}
           <div className="flex lg:hidden items-center gap-2">
             <button
               onClick={() => handleNavClick('/dashboard')}
@@ -289,11 +289,19 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
             </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-xl text-[#211B2B] hover:bg-[#FAF8FD] focus:outline-none cursor-pointer"
+              className="p-2.5 rounded-xl text-[#211B2B] hover:bg-[#FAF8FD] border border-[#E8E2EF] focus:outline-none cursor-pointer flex flex-col justify-center items-center w-10 h-10 gap-1.5"
               aria-label="Toggle navigation drawer"
               aria-expanded={isMobileMenuOpen}
             >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              <span className={`w-5 h-0.5 bg-[#211B2B] rounded-full transition-all duration-300 ${
+                isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''
+              }`} />
+              <span className={`w-5 h-0.5 bg-[#211B2B] rounded-full transition-all duration-300 ${
+                isMobileMenuOpen ? 'opacity-0 scale-0' : ''
+              }`} />
+              <span className={`w-5 h-0.5 bg-[#211B2B] rounded-full transition-all duration-300 ${
+                isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
+              }`} />
             </button>
           </div>
         </div>

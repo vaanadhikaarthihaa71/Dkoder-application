@@ -3,6 +3,7 @@ import { ToastProvider } from './context/ToastContext';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { RobotGuideWidget } from './components/common/RobotGuideWidget';
+import { BackToTop } from './components/common/BackToTop';
 import { HomePage } from './pages/HomePage';
 import { HackathonsPage } from './pages/HackathonsPage';
 import { CollegesPage } from './pages/CollegesPage';
@@ -91,6 +92,9 @@ export function App() {
 
         {/* Global Signature 3D Mascot Companion & Tour Assistant */}
         <RobotGuideWidget currentPath={currentPath} onNavigate={handleNavigate} />
+
+        {/* Global Floating Back-to-Top with Progress Ring */}
+        <BackToTop />
       </div>
     </ToastProvider>
   );

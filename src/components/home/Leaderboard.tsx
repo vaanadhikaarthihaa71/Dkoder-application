@@ -7,6 +7,7 @@ import {
   Crown,
   ChevronDown
 } from 'lucide-react';
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 
 export const Leaderboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'xp' | 'active' | 'hard'>('xp');
@@ -37,12 +38,20 @@ export const Leaderboard: React.FC = () => {
 
   const topThree = sortedStudents.slice(0, 3);
 
+  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLDivElement>();
+
   const toggleExpand = (id: string) => {
     setExpandedStudentId((prev) => (prev === id ? null : id));
   };
 
   return (
-    <section className="py-16 sm:py-20 bg-white border-b border-[#E8E2EF]" id="leaderboard">
+    <section 
+      ref={sectionRef}
+      className={`py-16 sm:py-20 bg-white border-b border-[#E8E2EF] transition-all duration-700 ${
+        isVisible ? 'reveal-visible' : 'reveal-init'
+      }`} 
+      id="leaderboard"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

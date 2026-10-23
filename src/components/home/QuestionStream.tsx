@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Question 
 } from '../../types';
@@ -13,9 +13,12 @@ import {
   FilterX, 
   ArrowUpDown,
   Code2,
-  Sparkles,
-  Zap
+  Bookmark,
+  BookmarkCheck,
+  Copy,
+  Check
 } from 'lucide-react';
+import { useToast } from '../../context/ToastContext';
 
 interface QuestionStreamProps {
   questions: Question[];
@@ -30,8 +33,64 @@ export const QuestionStream: React.FC<QuestionStreamProps> = ({
   onSelectQuestion,
   onResetFilters
 }) => {
+  const { addToast } = useToast();
   const [sortBy, setSortBy] = useState<'recommended' | 'time-asc' | 'solvers-desc'>('recommended');
   const [detailQuestion, setDetailQuestion] = useState<Question | null>(null);
+  const [isCopied, setIsCopied] = useState(false);
+  const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(() => {
+    try {
+      const saved = localStorage.getItem('dkoder_bookmarks');
+      if (saved) return new Set(JSON.parse(saved));
+    } catch (e) {
+      console.error(e);
+    }
+    return new Set(['q-101']);
+  });
+  const [animatingBookmarkId, setAnimatingBookmarkId] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('dkoder_bookmarks', JSON.stringify(Array.from(bookmarkedIds)));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [bookmarkedIds]);
+
+  const handleToggleBookmark = (e: React.MouseEvent, q: Question) => {
+    e.stopPropagation();
+    setAnimatingBookmarkId(q.id);
+    setTimeout(() => setAnimatingBookmarkId(null), 400);
+
+    const isBookmarked = bookmarkedIds.has(q.id);
+    const updated = new Set(bookmarkedIds);
+    if (isBookmarked) {
+      updated.delete(q.id);
+      addToast({
+        type: 'info',
+        title: 'Bookmark Removed',
+        description: `Removed "${q.title}" from saved questions.`
+      });
+    } else {
+      updated.add(q.id);
+      addToast({
+        type: 'success',
+        title: 'Question Bookmarked! 🔖',
+        description: `Saved "${q.title}" for quick revision.`
+      });
+    }
+    setBookmarkedIds(updated);
+  };
+
+  const handleCopyCodeSnippet = (snippet: string) => {
+    navigator.clipboard.writeText(snippet);
+    setIsCopied(true);
+    addToast({
+      type: 'success',
+      title: 'Copied to Clipboard! 📋',
+      description: 'Starter code copied to your clipboard.'
+    });
+    setTimeout(() => setIsCopied(false), 2000);
+  };
 
   const sortedQuestions = [...questions].sort((a, b) => {
     if (sortBy === 'time-asc') return a.estimatedMinutes - b.estimatedMinutes;
@@ -93,11 +152,13 @@ export const QuestionStream: React.FC<QuestionStreamProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
           {sortedQuestions.map((q, idx) => {
             const isSolved = solvedIds.has(q.id);
+            const isBookmarked = bookmarkedIds.has(q.id);
+            const isAnimating = animatingBookmarkId === q.id;
 
             return (
               <div
                 key={q.id}
-                className={`bg-white rounded-2xl border p-4 flex flex-col justify-between transition-all duration-200 group card-hover-shadow ${
+                className={`bg-white rounded-2xl border p-4 flex flex-col justify-between transition-all duration-200 group card-hover-shadow relative ${
                   isSolved
                     ? 'border-emerald-300 bg-[#FAFDFB]'
                     : 'border-[#E8E2EF] hover:border-[#5425A8]'
@@ -105,7 +166,7 @@ export const QuestionStream: React.FC<QuestionStreamProps> = ({
                 style={{ animationDelay: `${Math.min(idx * 40, 320)}ms` }}
               >
                 <div>
-                  {/* Top Row: Difficulty, Format, Company, Topic */}
+                  {/* Top Row: Difficulty, Format, Company, Topic & Bookmark */}
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <div className="flex items-center gap-1.5 flex-wrap">
                       <Badge
@@ -122,9 +183,32 @@ export const QuestionStream: React.FC<QuestionStreamProps> = ({
                       </span>
                     </div>
 
-                    <span className="text-[11px] text-[#6F687A] font-semibold hidden sm:inline">
-                      {q.topic}
-                    </span>
+                    <div className="flex items-center gap-1">
+                      <span className="text-[11px] text-[#6F687A] font-semibold hidden sm:inline mr-1">
+                        {q.topic}
+                      </span>
+
+                      {/* Interactive Bookmark / Favorite Icon Button with Pop animation */}
+                      <button
+                        type="button"
+                        onClick={(e) => handleToggleBookmark(e, q)}
+                        className={`p-1.5 rounded-lg border transition-all cursor-pointer ${
+                          isAnimating ? 'animate-pop' : ''
+                        } ${
+                          isBookmarked 
+                            ? 'bg-[#FFF8D6] border-[#FFD84D] text-[#92400E]' 
+                            : 'bg-white border-transparent hover:border-[#E8E2EF] text-[#948B9E] hover:text-[#5425A8]'
+                        }`}
+                        title={isBookmarked ? "Remove Bookmark" : "Bookmark Question"}
+                        aria-label="Bookmark question"
+                      >
+                        {isBookmarked ? (
+                          <BookmarkCheck className="w-3.5 h-3.5 fill-[#FFD84D] text-[#92400E]" />
+                        ) : (
+                          <Bookmark className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
                   </div>
 
                   {/* Question Title (Clickable for Detail View) */}
@@ -140,7 +224,7 @@ export const QuestionStream: React.FC<QuestionStreamProps> = ({
                 <div className="pt-2.5 border-t border-[#E8E2EF] flex items-center justify-between gap-2">
                   <button
                     onClick={() => setDetailQuestion(q)}
-                    className="text-[11px] font-bold text-[#6F687A] hover:text-[#5425A8] transition-colors flex items-center gap-1 cursor-pointer"
+                    className="text-[11px] font-bold text-[#6F687A] hover:text-[#5425A8] transition-colors flex items-center gap-1 cursor-pointer link-underline-hover"
                   >
                     <span>View Blueprint</span>
                   </button>
@@ -149,7 +233,7 @@ export const QuestionStream: React.FC<QuestionStreamProps> = ({
                     variant={isSolved ? 'outline' : 'primary'}
                     size="sm"
                     onClick={() => onSelectQuestion(q)}
-                    rightIcon={isSolved ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> : <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />}
+                    rightIcon={isSolved ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> : <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />}
                     className="font-bold interactive-tap"
                   >
                     {isSolved ? 'Review Code' : 'Start Practising'}
@@ -205,11 +289,32 @@ export const QuestionStream: React.FC<QuestionStreamProps> = ({
               </p>
             </div>
 
-            {/* Code / Question Sandbox Preview */}
-            <div className="p-3.5 rounded-xl bg-[#211B2B] text-emerald-400 font-mono text-xs border border-[#211B2B]/20">
+            {/* Code / Question Sandbox Preview with Copy Button */}
+            <div className="p-3.5 rounded-xl bg-[#211B2B] text-emerald-400 font-mono text-xs border border-[#211B2B]/20 relative">
               <div className="flex items-center justify-between text-[11px] text-purple-300 font-sans mb-1.5 pb-1 border-b border-white/10">
                 <span>{detailQuestion.format === 'Coding' ? 'Live Sandbox Environment' : 'Concept Evaluator'}</span>
-                <span>Python 3.11 / Java 17 / C++</span>
+                
+                {/* Copy Button with Morphing Check Icon */}
+                <button
+                  type="button"
+                  onClick={() => handleCopyCodeSnippet(
+                    detailQuestion.starterCode?.['python'] || `def solve_${detailQuestion.id.replace(/-/g, '_')}(nums):\n    pass`
+                  )}
+                  className="flex items-center gap-1 px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-[#FFF8D6] transition-colors cursor-pointer text-[10px] font-sans font-bold"
+                  title="Copy Starter Code"
+                >
+                  {isCopied ? (
+                    <>
+                      <Check className="w-3 h-3 text-emerald-400" />
+                      <span className="text-emerald-400">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3 h-3" />
+                      <span>Copy Code</span>
+                    </>
+                  )}
+                </button>
               </div>
               <code>
                 {detailQuestion.format === 'Coding'
