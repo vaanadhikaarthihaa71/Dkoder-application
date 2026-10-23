@@ -13,6 +13,7 @@ import { SubscriptionPage } from './pages/SubscriptionPage';
 import { InfosysBundlePage } from './pages/InfosysBundlePage';
 import { AccentureBundlePage } from './pages/AccentureBundlePage';
 import { TcsBundlePage } from './pages/TcsBundlePage';
+import { WelcomeIntro } from './components/common/WelcomeIntro';
 
 export function App() {
   const [currentPath, setCurrentPath] = useState<string>(() => {
@@ -84,6 +85,9 @@ export function App() {
 
   return (
     <ToastProvider>
+      {/* Animated Welcome Intro at Website Opening */}
+      <WelcomeIntro />
+
       <div className="flex flex-col min-h-screen bg-white text-[#211B2B]">
         {!isDashboard && <Navbar currentPath={currentPath} onNavigate={handleNavigate} />}
         
