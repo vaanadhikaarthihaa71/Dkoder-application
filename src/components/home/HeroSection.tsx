@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   ArrowRight, 
   Terminal, 
@@ -49,7 +49,31 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const activeItem = DEMO_QUERIES[activeQueryIndex];
   
   const heroRef = useRef<HTMLElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const parallax = useParallax(heroRef, 12);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Fallback: stay muted and silently play on the first user interaction
+        const startPlay = () => {
+          if (video) {
+            video.muted = true;
+            video.play().catch(() => {});
+          }
+        };
+        window.addEventListener('click', startPlay, { once: true });
+        window.addEventListener('touchstart', startPlay, { once: true });
+      });
+    }
+  }, []);
 
   // Split headline for staggered word entrance
   const headlineWords = [
@@ -66,7 +90,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <section 
       ref={heroRef}
-      className="relative pt-12 pb-20 lg:pt-18 lg:pb-28 bg-gradient-to-b from-white via-[#FAF8FD] to-white border-b border-[#E8E2EF] overflow-hidden"
+      className="relative pt-6 pb-20 lg:pt-8 lg:pb-28 bg-gradient-to-b from-white via-[#FAF8FD] to-white border-b border-[#E8E2EF] overflow-hidden"
     >
       {/* Subtle Animated Tech Grid & Glow Accents */}
       <div className="absolute inset-0 bg-tech-grid opacity-75 pointer-events-none -z-10" />
@@ -106,6 +130,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
+        {/* Uploaded DKODER Welcome Video Above Hero Content */}
+        <div className="mb-10 lg:mb-14 w-full max-w-4xl mx-auto pointer-events-none select-none">
+          <div className="rounded-2xl overflow-hidden border border-[#E8E2EF] bg-white shadow-sm">
+            <video
+              ref={videoRef}
+              src="/assets/aistudio/Robot_welcoming_animation_video_1080p_20261024001749_31b5fafa.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              controls={false}
+              disablePictureInPicture
+              disableRemotePlayback
+              aria-hidden="true"
+              tabIndex={-1}
+              className="w-full h-auto aspect-video object-contain block pointer-events-none select-none"
+            />
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
           {/* Left Column: Staggered Headline, Copy & CTAs (Span 6) */}

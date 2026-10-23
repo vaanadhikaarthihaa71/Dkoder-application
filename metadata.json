@@ -1,0 +1,8 @@
+{
+  "name": "DKODER — Placement LMS & Developer Career Platform",
+  "description": "DKODER — The Placement LMS for Engineering Colleges across India. Real placement questions, company-tagged, live coding lab, salary filters, entrance exam prep (TCS NQT, InfyTQ, Accenture, Product tracks).",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
