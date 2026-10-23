@@ -29,6 +29,141 @@
   }
 }
 
+/* Subtle Animated Grid Background */
+.bg-tech-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(84, 37, 168, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(84, 37, 168, 0.04) 1px, transparent 1px);
+}
+
+.bg-tech-dots {
+  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(84, 37, 168, 0.08) 1.5px, transparent 1.5px);
+}
+
+/* 3D Robot Floating & Idle Animations */
+@keyframes kodyFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(0.8deg);
+  }
+}
+
+@keyframes kodyBreathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.018);
+  }
+}
+
+@keyframes kodyWiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes auraGlow {
+  0%, 100% {
+    filter: drop-shadow(0 10px 18px rgba(255, 216, 77, 0.35)) drop-shadow(0 0 20px rgba(84, 37, 168, 0.15));
+  }
+  50% {
+    filter: drop-shadow(0 16px 26px rgba(255, 216, 77, 0.55)) drop-shadow(0 0 30px rgba(84, 37, 168, 0.3));
+  }
+}
+
+@keyframes digitalPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(0.97);
+  }
+}
+
+.animate-kody-float {
+  animation: kodyFloat 4.8s ease-in-out infinite;
+}
+
+.animate-kody-glow {
+  animation: auraGlow 3.5s ease-in-out infinite;
+}
+
+.animate-kody-wiggle {
+  animation: kodyWiggle 0.6s ease-in-out;
+}
+
+/* Hero Headline Staggered Word Entrance */
+@keyframes wordEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-word {
+  display: inline-block;
+  opacity: 0;
+  animation: wordEntrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Smooth Scroll Reveals */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-scale-init {
+  opacity: 0;
+  transform: scale(0.96) translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-scale-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Stagger Helpers */
+.stagger-1 { transition-delay: 60ms; }
+.stagger-2 { transition-delay: 120ms; }
+.stagger-3 { transition-delay: 180ms; }
+.stagger-4 { transition-delay: 240ms; }
+.stagger-5 { transition-delay: 300ms; }
+
+/* Micro-Interactions for Buttons & Interactive Badges */
+.interactive-tap {
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease;
+}
+
+.interactive-tap:active {
+  transform: scale(0.96) translateY(1px);
+}
+
 /* Restrained, smooth marquee */
 @keyframes marquee {
   0% { transform: translateX(0%); }
@@ -43,13 +178,6 @@
 
 .animate-marquee:hover {
   animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
-    animation: none;
-    overflow-x: auto;
-  }
 }
 
 /* Clean scrollbar */
@@ -77,11 +205,43 @@
 }
 
 .card-hover-shadow {
-  transition: all 0.2s ease-in-out;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-hover-shadow:hover {
-  box-shadow: 0 10px 25px -5px rgba(84, 37, 168, 0.07), 0 8px 10px -6px rgba(84, 37, 168, 0.05);
+  box-shadow: 0 12px 28px -6px rgba(84, 37, 168, 0.09), 0 8px 12px -6px rgba(84, 37, 168, 0.05);
   border-color: #D4CBDF;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+}
+
+/* Perspective Tilt Containers */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-kody-float,
+  .animate-kody-glow,
+  .animate-word,
+  .animate-marquee {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  
+  .reveal-init,
+  .reveal-scale-init {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

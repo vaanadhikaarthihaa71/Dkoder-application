@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ToastProvider } from './context/ToastContext';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
+import { RobotGuideWidget } from './components/common/RobotGuideWidget';
 import { HomePage } from './pages/HomePage';
 import { HackathonsPage } from './pages/HackathonsPage';
 import { CollegesPage } from './pages/CollegesPage';
@@ -80,10 +81,16 @@ export function App() {
     <ToastProvider>
       <div className="flex flex-col min-h-screen bg-white text-[#211B2B]">
         {!isDashboard && <Navbar currentPath={currentPath} onNavigate={handleNavigate} />}
-        <main className="flex-1">
+        
+        {/* Animated Page Transition Container */}
+        <main key={currentPath} className="flex-1 animate-word">
           {renderCurrentPage()}
         </main>
+
         {!isDashboard && <Footer onNavigate={handleNavigate} />}
+
+        {/* Global Signature 3D Mascot Companion & Tour Assistant */}
+        <RobotGuideWidget currentPath={currentPath} onNavigate={handleNavigate} />
       </div>
     </ToastProvider>
   );

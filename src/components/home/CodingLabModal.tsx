@@ -7,13 +7,16 @@ import {
   Clock, 
   Terminal, 
   Check, 
-  Lightbulb 
+  Lightbulb,
+  Sparkles,
+  Trophy
 } from 'lucide-react';
 import { Question } from '../../types';
 import { Modal } from '../common/Modal';
 import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
 import { useToast } from '../../context/ToastContext';
+import confetti from 'canvas-confetti';
 
 interface CodingLabModalProps {
   question: Question | null;
@@ -66,26 +69,34 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
         title: 'Sample Tests Passed',
         description: 'Your solution matched sample outputs.'
       });
-    }, 800);
+    }, 700);
   };
 
   const handleSubmitSolution = () => {
     setIsSubmitting(true);
-    setOutputConsole('Evaluating against hidden test cases...');
+    setOutputConsole('Evaluating against hidden recruiter test suite...');
 
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSolved(true);
       setOutputConsole(
-        `🎉 VERDICT: ACCEPTED\n✓ 18/18 Test cases passed\n✓ Runtime: 32 ms\n✓ Memory: 15.1 MB\n+50 XP recorded locally!`
+        `🎉 VERDICT: ACCEPTED\n✓ 18/18 Hidden test cases passed\n✓ Runtime: 32 ms\n✓ Memory: 15.1 MB\n+50 XP recorded to your DKODER streak!`
       );
+      
+      confetti({
+        particleCount: 50,
+        spread: 55,
+        origin: { y: 0.6 },
+        colors: ['#FFD84D', '#5425A8', '#F3EDFF']
+      });
+
       onSuccessSolved(question.id);
       addToast({
         type: 'success',
         title: 'Problem Solved! (+50 XP)',
         description: `"${question.title}" recorded in your local practice log.`
       });
-    }, 1200);
+    }, 1100);
   };
 
   const handleMcqSubmit = () => {
@@ -96,6 +107,12 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
 
     if (isCorrect) {
       setIsSolved(true);
+      confetti({
+        particleCount: 40,
+        spread: 45,
+        origin: { y: 0.6 },
+        colors: ['#FFD84D', '#5425A8', '#F3EDFF']
+      });
       onSuccessSolved(question.id);
       addToast({
         type: 'success',
@@ -149,18 +166,18 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
         <div className="flex flex-wrap items-center gap-1.5 text-xs">
           <span className="font-semibold text-[#6F687A]">Topics:</span>
           {question.topicTags.map((tag) => (
-            <span key={tag} className="px-2 py-0.5 rounded-md bg-[#FAF8FD] text-[#211B2B] border border-[#E8E2EF] text-[11px]">
+            <span key={tag} className="px-2 py-0.5 rounded-md bg-[#FAF8FD] text-[#211B2B] border border-[#E8E2EF] text-[11px] font-medium">
               {tag}
             </span>
           ))}
-          <span className="ml-auto font-medium text-[#5425A8] bg-[#F3EDFF] px-2 py-0.5 rounded-md text-[11px]">
+          <span className="ml-auto font-bold text-[#5425A8] bg-[#F3EDFF] px-2.5 py-0.5 rounded-md text-[11px]">
             Target: {question.packageCategory}
           </span>
         </div>
 
         {/* Problem Description */}
-        <div className="p-3.5 rounded-xl bg-[#FAF8FD] border border-[#E8E2EF]">
-          <div className="text-[11px] font-semibold uppercase tracking-wider text-[#6F687A] mb-1.5">
+        <div className="p-4 rounded-2xl bg-[#FAF8FD] border border-[#E8E2EF]">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-[#6F687A] mb-1.5">
             Problem Statement
           </div>
           <p className="text-xs sm:text-sm text-[#211B2B] leading-relaxed">
@@ -169,13 +186,13 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
 
           {question.sampleInput && (
             <div className="mt-3 pt-3 border-t border-[#E8E2EF] grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
-              <div className="p-2 rounded bg-white border border-[#E8E2EF]">
-                <span className="text-[10px] text-[#6F687A] uppercase block">Input:</span>
-                <span className="text-[#211B2B]">{question.sampleInput}</span>
+              <div className="p-2.5 rounded-xl bg-white border border-[#E8E2EF]">
+                <span className="text-[10px] text-[#6F687A] uppercase block font-bold">Sample Input:</span>
+                <span className="text-[#211B2B] font-semibold">{question.sampleInput}</span>
               </div>
-              <div className="p-2 rounded bg-white border border-[#E8E2EF]">
-                <span className="text-[10px] text-[#6F687A] uppercase block">Output:</span>
-                <span className="text-[#211B2B] font-semibold">{question.sampleOutput}</span>
+              <div className="p-2.5 rounded-xl bg-white border border-[#E8E2EF]">
+                <span className="text-[10px] text-[#6F687A] uppercase block font-bold">Expected Output:</span>
+                <span className="text-[#5425A8] font-bold">{question.sampleOutput}</span>
               </div>
             </div>
           )}
@@ -184,14 +201,14 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
         {/* Coding Mode */}
         {question.format === 'Coding' && (
           <div className="space-y-2.5">
-            <div className="flex items-center justify-between bg-[#211B2B] text-white px-3 py-1.5 rounded-t-xl text-xs">
+            <div className="flex items-center justify-between bg-[#211B2B] text-white px-3.5 py-2 rounded-t-xl text-xs">
               <div className="flex items-center gap-2">
                 <Terminal className="w-3.5 h-3.5 text-[#FFD84D]" />
-                <span className="font-semibold">Compiler:</span>
+                <span className="font-bold">Compiler:</span>
                 <select
                   value={selectedLang}
                   onChange={(e) => setSelectedLang(e.target.value as any)}
-                  className="bg-[#371275] text-[#FFD84D] text-xs font-semibold px-2 py-0.5 rounded border border-[#5425A8] cursor-pointer"
+                  className="bg-[#371275] text-[#FFD84D] text-xs font-bold px-2 py-0.5 rounded-lg border border-[#5425A8] cursor-pointer"
                 >
                   <option value="python">Python 3.11</option>
                   <option value="java">Java 17</option>
@@ -204,7 +221,7 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
                 className="text-[11px] text-[#E8E2EF] hover:text-white flex items-center gap-1 cursor-pointer"
               >
                 <RotateCcw className="w-3 h-3" />
-                <span>Reset</span>
+                <span>Reset Starter Code</span>
               </button>
             </div>
 
@@ -212,7 +229,7 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
               value={code}
               onChange={(e) => setCode(e.target.value)}
               rows={8}
-              className="w-full font-mono text-xs bg-[#211B2B] text-[#FFF8D6] p-3 rounded-b-xl border border-[#371275] focus:outline-none focus:ring-1 focus:ring-[#FFD84D] resize-y leading-relaxed"
+              className="w-full font-mono text-xs bg-[#211B2B] text-[#FFF8D6] p-3.5 rounded-b-xl border border-[#371275] focus:outline-none focus:ring-1 focus:ring-[#FFD84D] resize-y leading-relaxed"
               spellCheck={false}
             />
 
@@ -224,6 +241,7 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
                   onClick={handleRunCode}
                   isLoading={isRunning}
                   leftIcon={<Play className="w-3 h-3 text-[#5425A8]" />}
+                  className="interactive-tap font-semibold"
                 >
                   Run Sample Tests
                 </Button>
@@ -234,22 +252,26 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
                   onClick={handleSubmitSolution}
                   isLoading={isSubmitting}
                   leftIcon={<Send className="w-3 h-3" />}
+                  className="interactive-tap font-bold"
                 >
                   Submit Solution
                 </Button>
               </div>
 
               {isSolved && (
-                <span className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  Verified Solution
-                </span>
+                <div className="flex items-center gap-2 px-3 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800 animate-word">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <span>Accepted! +50 Placement XP</span>
+                </div>
               )}
             </div>
 
             {outputConsole && (
-              <div className="p-3 rounded-xl bg-[#211B2B] text-xs font-mono text-[#F3EDFF] border border-[#5425A8]">
-                <div className="text-[10px] uppercase font-bold text-[#FFD84D] mb-1">Execution Output</div>
+              <div className="p-3.5 rounded-xl bg-[#211B2B] text-xs font-mono text-[#F3EDFF] border border-[#5425A8] animate-word">
+                <div className="text-[10px] uppercase font-bold text-[#FFD84D] mb-1 flex items-center justify-between">
+                  <span>Execution Output</span>
+                  <span className="text-white/60">DKODER Sandbox Kernel</span>
+                </div>
                 <pre className="whitespace-pre-wrap">{outputConsole}</pre>
               </div>
             )}
@@ -259,7 +281,7 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
         {/* MCQ Mode */}
         {question.format === 'MCQ' && question.mcqOptions && (
           <div className="space-y-3">
-            <div className="text-xs font-semibold text-[#6F687A] uppercase">
+            <div className="text-xs font-bold text-[#6F687A] uppercase tracking-wider">
               Select Answer:
             </div>
 
@@ -270,12 +292,12 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
                 
                 if (isMcqSubmitted) {
                   if (opt.isCorrect) {
-                    optStyle = 'border-emerald-500 bg-emerald-50 text-emerald-950 font-semibold';
+                    optStyle = 'border-emerald-500 bg-emerald-50 text-emerald-950 font-bold';
                   } else if (isSelected && !opt.isCorrect) {
-                    optStyle = 'border-red-400 bg-red-50 text-red-950';
+                    optStyle = 'border-rose-400 bg-rose-50 text-rose-950';
                   }
                 } else if (isSelected) {
-                  optStyle = 'border-[#5425A8] bg-[#F3EDFF] text-[#211B2B] font-semibold';
+                  optStyle = 'border-[#5425A8] bg-[#F3EDFF] text-[#211B2B] font-bold';
                 }
 
                 return (
@@ -283,7 +305,7 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
                     key={opt.id}
                     onClick={() => !isMcqSubmitted && setSelectedMcqOption(opt.id)}
                     disabled={isMcqSubmitted}
-                    className={`w-full text-left p-3 rounded-xl border text-xs flex items-start gap-2.5 cursor-pointer transition-all ${optStyle}`}
+                    className={`w-full text-left p-3.5 rounded-xl border text-xs flex items-start gap-2.5 cursor-pointer transition-all interactive-tap ${optStyle}`}
                   >
                     <span className="w-4 h-4 rounded-full border border-current flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">
                       {isMcqSubmitted && opt.isCorrect ? <Check className="w-3 h-3 text-emerald-600" /> : opt.id.slice(-1).toUpperCase()}
@@ -300,6 +322,7 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
                 size="sm"
                 onClick={handleMcqSubmit}
                 disabled={!selectedMcqOption}
+                className="font-bold interactive-tap"
               >
                 Submit Answer
               </Button>
@@ -311,6 +334,7 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
                   setIsMcqSubmitted(false);
                   setSelectedMcqOption(null);
                 }}
+                className="interactive-tap font-semibold"
               >
                 Try Again
               </Button>
@@ -318,12 +342,17 @@ export const CodingLabModal: React.FC<CodingLabModalProps> = ({
           </div>
         )}
 
-        {/* Editorial Explanation */}
+        {/* Editorial Explanation with Kody Insight */}
         {(isSolved || isMcqSubmitted) && (
-          <div className="p-3.5 rounded-xl bg-[#FFF8D6] border border-[#FFD84D]/40 text-xs text-[#211B2B] space-y-1">
-            <div className="font-semibold text-[#92400E] flex items-center gap-1.5 uppercase tracking-wide text-[11px]">
-              <Lightbulb className="w-3.5 h-3.5" />
-              <span>Editorial Notes & Complexity</span>
+          <div className="p-4 rounded-2xl bg-[#FFF8D6] border border-[#FFD84D]/60 text-xs text-[#211B2B] space-y-1.5 animate-word">
+            <div className="font-bold text-[#92400E] flex items-center justify-between uppercase tracking-wide text-[11px]">
+              <span className="flex items-center gap-1.5">
+                <Lightbulb className="w-3.5 h-3.5 text-[#5425A8]" />
+                <span>Editorial Notes & Recruiter Expectation</span>
+              </span>
+              <span className="font-bold text-[#5425A8] bg-white px-2 py-0.5 rounded-md border border-[#FFD84D]/40">
+                Verified Syllabus
+              </span>
             </div>
             <p className="leading-relaxed font-medium">
               {question.explanation}

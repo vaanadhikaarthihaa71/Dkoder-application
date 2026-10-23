@@ -5,9 +5,11 @@ import {
   Calendar, 
   Bell, 
   ArrowLeft,
-  CalendarCheck2
+  CalendarCheck2,
+  Sparkles
 } from 'lucide-react';
 import { Button } from '../common/Button';
+import { KodyMascot } from '../common/KodyMascot';
 
 interface DashboardHeaderProps {
   studentName?: string;
@@ -58,20 +60,31 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   });
 
   return (
-    <header className="bg-white border-b border-[#E8E2EF] sticky top-0 z-30 px-4 sm:px-6 lg:px-8 py-3.5 transition-all">
+    <header className="bg-white/95 backdrop-blur-md border-b border-[#E8E2EF] sticky top-0 z-30 px-4 sm:px-6 lg:px-8 py-3.5 transition-all">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
         
-        {/* Left: Mobile Toggle & Personalized Greeting */}
+        {/* Left: Mobile Toggle & Personalized Greeting with Kody Companion */}
         <div className="flex items-center gap-3">
           {/* Mobile hamburger drawer toggle */}
           <button
             type="button"
             onClick={onOpenMobileDrawer}
-            className="lg:hidden p-2 rounded-xl text-[#211B2B] hover:bg-[#FAF8FD] border border-[#E8E2EF] focus:outline-none cursor-pointer"
+            className="lg:hidden p-2 rounded-xl text-[#211B2B] hover:bg-[#FAF8FD] border border-[#E8E2EF] focus:outline-none cursor-pointer interactive-tap"
             aria-label="Open navigation sidebar"
           >
             <Menu className="w-5 h-5" />
           </button>
+
+          {/* Mini Kody Companion Avatar */}
+          <div className="hidden sm:block">
+            <KodyMascot
+              pose="avatar"
+              size="sm"
+              interactive={true}
+              withFloating={false}
+              withGlow={false}
+            />
+          </div>
 
           <div>
             <div className="flex items-center gap-2">
@@ -84,13 +97,13 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             </div>
 
             {/* Exam status line */}
-            <div className="flex items-center gap-2 mt-0.5 text-xs text-[#706879]">
-              <div className="flex items-center gap-1 font-medium text-[#706879]">
+            <div className="flex items-center gap-2 mt-0.5 text-xs text-[#6F687A]">
+              <div className="flex items-center gap-1 font-medium text-[#6F687A]">
                 <CalendarCheck2 className="w-3.5 h-3.5 text-[#5425A8]" />
                 <span>No exams assigned yet.</span>
               </div>
               <span className="hidden sm:inline text-[#E8E2EF]">•</span>
-              <span className="hidden sm:inline text-[11px] text-[#948B9E]">
+              <span className="hidden sm:inline text-[11px] text-[#6F687A]">
                 Check back for scheduled college drives
               </span>
             </div>
@@ -102,14 +115,14 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           
           {/* Live Date and Time Pill */}
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FAF8FD] border border-[#E8E2EF] text-xs shadow-2xs">
-            <div className="flex items-center gap-1 text-[#706879] font-medium">
+            <div className="flex items-center gap-1 text-[#6F687A] font-medium">
               <Calendar className="w-3.5 h-3.5 text-[#5425A8]" />
               <span className="hidden sm:inline">{formattedDate}</span>
               <span className="sm:hidden">{currentTime.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
             </div>
             <span className="text-[#E8E2EF]">|</span>
             <div className="flex items-center gap-1 font-mono font-bold text-[#211B2B]">
-              <Clock className="w-3.5 h-3.5 text-[#059669]" />
+              <Clock className="w-3.5 h-3.5 text-emerald-600" />
               <span>{formattedTime}</span>
             </div>
           </div>
@@ -121,7 +134,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
               size="sm"
               onClick={() => onNavigate('/')}
               leftIcon={<ArrowLeft className="w-3.5 h-3.5" />}
-              className="hidden sm:inline-flex text-xs"
+              className="hidden sm:inline-flex text-xs interactive-tap font-semibold"
             >
               Main Site
             </Button>
@@ -131,7 +144,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
               <button
                 type="button"
                 onClick={() => setShowNotificationToast(!showNotificationToast)}
-                className="p-2 rounded-xl border border-[#E8E2EF] bg-white text-[#706879] hover:text-[#5425A8] hover:bg-[#FAF8FD] transition-colors relative cursor-pointer"
+                className="p-2 rounded-xl border border-[#E8E2EF] bg-white text-[#6F687A] hover:text-[#5425A8] hover:bg-[#FAF8FD] transition-colors relative cursor-pointer interactive-tap"
                 title="Notifications"
                 aria-label="View notifications"
               >
@@ -140,16 +153,19 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
               </button>
 
               {showNotificationToast && (
-                <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-white border border-[#E8E2EF] shadow-lg p-3 z-50 text-xs animate-fadeIn">
+                <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-white border border-[#E8E2EF] shadow-2xl p-3.5 z-50 text-xs animate-word">
                   <div className="flex items-center justify-between pb-2 border-b border-[#E8E2EF]">
                     <span className="font-bold text-[#211B2B]">Notifications</span>
-                    <span className="text-[10px] text-[#5425A8] font-semibold">1 New</span>
+                    <span className="text-[10px] text-[#5425A8] font-bold px-1.5 py-0.5 rounded-full bg-[#F3EDFF]">1 New</span>
                   </div>
                   <div className="py-2.5 space-y-2">
-                    <div className="p-2 rounded-xl bg-[#FAF8FD] border border-[#E8E2EF]">
-                      <div className="font-semibold text-[#211B2B]">Welcome to DKODER! 🚀</div>
-                      <p className="text-[11px] text-[#706879] mt-0.5">
-                        Solve your first coding challenge today to begin your streak.
+                    <div className="p-2.5 rounded-xl bg-[#FAF8FD] border border-[#E8E2EF]">
+                      <div className="font-bold text-[#211B2B] flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5 text-[#FFD84D] fill-[#FFD84D]" />
+                        <span>Welcome to DKODER! 🚀</span>
+                      </div>
+                      <p className="text-[11px] text-[#6F687A] mt-1 leading-relaxed">
+                        Solve your first coding challenge today to begin your streak and earn placement XP.
                       </p>
                     </div>
                   </div>
@@ -159,7 +175,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                       setShowNotificationToast(false);
                       if (onSelectTab) onSelectTab('coding');
                     }}
-                    className="w-full py-1 text-center font-semibold text-[#5425A8] hover:underline text-[11px] cursor-pointer"
+                    className="w-full py-1.5 text-center font-bold text-[#5425A8] hover:underline text-[11px] cursor-pointer"
                   >
                     Start First Practice →
                   </button>
