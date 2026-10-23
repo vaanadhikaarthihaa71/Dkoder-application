@@ -12,6 +12,7 @@ import { DashboardPage } from './pages/DashboardPage';
 import { SubscriptionPage } from './pages/SubscriptionPage';
 import { InfosysBundlePage } from './pages/InfosysBundlePage';
 import { AccentureBundlePage } from './pages/AccentureBundlePage';
+import { TcsBundlePage } from './pages/TcsBundlePage';
 
 export function App() {
   const [currentPath, setCurrentPath] = useState<string>(() => {
@@ -65,6 +66,9 @@ export function App() {
     }
     if (currentPath === '/student/subscription') {
       return <SubscriptionPage onNavigate={handleNavigate} />;
+    }
+    if (currentPath === '/bundles/tcs') {
+      return <TcsBundlePage onNavigate={handleNavigate} />;
     }
     if (currentPath === '/bundles/infosys') {
       return <InfosysBundlePage onNavigate={handleNavigate} />;

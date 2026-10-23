@@ -7,7 +7,9 @@ import {
   LayoutDashboard, 
   Flame, 
   Laptop,
-  GraduationCap
+  GraduationCap,
+  Award,
+  Zap
 } from 'lucide-react';
 import { Button } from './Button';
 
@@ -114,10 +116,26 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
 
                 {/* Dropdown Menu with Scale and Fade Entrance */}
                 {isLearnDropdownOpen && (
-                  <div className="absolute left-0 mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-[#E8E2EF] p-2.5 z-50 transform origin-top transition-all duration-200 animate-word">
+                  <div className="absolute left-0 mt-2 w-80 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-[#E8E2EF] p-2.5 z-50 transform origin-top transition-all duration-200 animate-word">
                     <div className="px-3 py-1.5 text-[11px] font-bold text-[#6F687A] uppercase tracking-wider">
-                      Company Prep Bundles
+                      Flagship Company Bundles
                     </div>
+
+                    <button
+                      onClick={() => handleNavClick('/bundles/tcs')}
+                      className="w-full flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#FAF8FD] text-left transition-colors cursor-pointer group"
+                    >
+                      <div className="p-2 rounded-lg bg-[#F3EDFF] text-[#5425A8] group-hover:bg-[#5425A8] group-hover:text-white transition-colors">
+                        <Zap className="w-4 h-4 text-[#FFD84D] fill-[#FFD84D]" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-bold text-[#211B2B] flex items-center gap-1.5">
+                          <span>TCS NQT Master Bundle</span>
+                          <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#FFF8D6] text-[#211B2B]">3.36–9 LPA</span>
+                        </div>
+                        <div className="text-xs text-[#6F687A]">Ninja, Digital & Prime Preparation</div>
+                      </div>
+                    </button>
 
                     <button
                       onClick={() => handleNavClick('/bundles/infosys')}
@@ -147,11 +165,26 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
 
                     <div className="h-px bg-[#E8E2EF] my-1.5" />
 
+                    <div className="px-3 py-1 text-[11px] font-bold text-[#6F687A] uppercase tracking-wider">
+                      Credentials & Plans
+                    </div>
+
+                    <button
+                      onClick={() => handleNavClick('/#certifications')}
+                      className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#FAF8FD] text-left transition-colors cursor-pointer"
+                    >
+                      <span className="text-xs font-bold text-[#5425A8] flex items-center gap-1.5">
+                        <Award className="w-3.5 h-3.5 text-[#5425A8]" />
+                        <span>Domain Certifications (QR Verified)</span>
+                      </span>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">6 Tracks</span>
+                    </button>
+
                     <button
                       onClick={() => handleNavClick('/student/subscription')}
                       className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#FAF8FD] text-left transition-colors cursor-pointer"
                     >
-                      <span className="text-xs font-bold text-[#5425A8]">Compare All 5 Plans</span>
+                      <span className="text-xs font-bold text-[#211B2B]">Compare All 5 Plans</span>
                       <span className="text-[10px] font-bold text-[#211B2B] bg-[#FFD84D] px-2 py-0.5 rounded-full">From ₹699</span>
                     </button>
                   </div>
@@ -350,8 +383,16 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
             <div className="h-px bg-[#E8E2EF] my-1" />
 
             <div className="text-[11px] font-bold text-[#6F687A] px-3.5 pt-1 uppercase tracking-wider">
-              Prep Bundles
+              Prep Bundles & Credentials
             </div>
+
+            <button
+              onClick={() => handleNavClick('/bundles/tcs')}
+              className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#211B2B] hover:bg-[#FAF8FD] transition-colors"
+            >
+              <span>TCS NQT Master Bundle</span>
+              <span className="text-[10px] bg-[#FFF8D6] text-[#211B2B] font-bold px-2 py-0.5 rounded border border-[#FFD84D]/40">Ninja/Digital/Prime</span>
+            </button>
 
             <button
               onClick={() => handleNavClick('/bundles/infosys')}
@@ -367,6 +408,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, onNavigate }) => {
             >
               <span>Accenture Fast-Track Prep</span>
               <span className="text-[10px] bg-[#F3EDFF] text-[#5425A8] px-2 py-0.5 rounded font-bold">Module</span>
+            </button>
+
+            <button
+              onClick={() => handleNavClick('/#certifications')}
+              className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#5425A8] hover:bg-[#FAF8FD] transition-colors"
+            >
+              <span>Domain Certifications (QR Verified)</span>
+              <span className="text-[10px] bg-emerald-50 text-emerald-800 font-bold px-2 py-0.5 rounded">6 Tracks</span>
             </button>
 
             <button

@@ -114,3 +114,29 @@ export interface ToastMessage {
   title: string;
   description?: string;
 }
+
+export interface CertificationTrack {
+  id: string;
+  title: string;
+  domain: 'Cybersecurity' | 'Cloud & DevOps' | 'Programming' | 'Data & AI' | 'Networking' | 'Strategy';
+  level: 'Foundational' | 'Intermediate' | 'Advanced' | 'Industry Ready';
+  durationWeeks: number;
+  totalModules: number;
+  handsOnLabs: number;
+  sampleCredentialId: string;
+  description: string;
+  skillsAcquired: string[];
+  syllabus: { title: string; topics: string[] }[];
+  iconName: string;
+}
+
+export interface FinalYearProjectTrack {
+  id: string;
+  title: string;
+  domain: string;
+  complexity: 'Standard' | 'High Impact' | 'Research Grade';
+  milestones: string[];
+  deliverables: string[];
+  paperPublicationSupport: boolean;
+  industryMentorAssigned: boolean;
+}

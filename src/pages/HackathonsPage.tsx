@@ -5,11 +5,18 @@ import {
   Users, 
   Award, 
   ArrowRight, 
-  Timer
+  Timer,
+  CheckCircle2,
+  FolderGit2,
+  FileText,
+  Sparkles,
+  ChevronRight
 } from 'lucide-react';
 import { Button } from '../components/common/Button';
 import { Modal } from '../components/common/Modal';
 import { useToast } from '../context/ToastContext';
+import { FINAL_YEAR_PROJECTS } from '../data/mockData';
+import { FinalYearProjectTrack } from '../types';
 
 interface HackathonsPageProps {
   onNavigate: (path: string) => void;
@@ -17,7 +24,9 @@ interface HackathonsPageProps {
 
 export const HackathonsPage: React.FC<HackathonsPageProps> = ({ onNavigate }) => {
   const { addToast } = useToast();
+  const [activeTab, setActiveTab] = useState<'contests' | 'projects'>('contests');
   const [selectedContest, setSelectedContest] = useState<string | null>(null);
+  const [selectedProject, setSelectedProject] = useState<FinalYearProjectTrack | null>(null);
   const [teamName, setTeamName] = useState('');
   const [collegeName, setCollegeName] = useState('');
 
@@ -121,80 +130,184 @@ export const HackathonsPage: React.FC<HackathonsPageProps> = ({ onNavigate }) =>
           </div>
         </div>
 
-        {/* Contests List */}
-        <div className="space-y-4 max-w-4xl mx-auto">
-          {contests.map((contest) => (
-            <div
-              key={contest.id}
-              className="bg-white rounded-2xl border border-[#E8E2EF] p-6 hover:border-[#5425A8] transition-all duration-150 shadow-xs"
-            >
-              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
-                <div className="space-y-2 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#F3EDFF] text-[#5425A8] border border-[#E8E2EF]">
-                      {contest.category}
-                    </span>
-                    <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#FFF8D6] text-[#211B2B] border border-[#FFD84D]/40">
-                      {contest.difficulty}
-                    </span>
-                    <span className="text-xs text-[#6F687A] flex items-center gap-1">
-                      <Timer className="w-3.5 h-3.5" />
-                      Starts in {contest.startsIn}
-                    </span>
-                  </div>
+        {/* Mode Selector Tabs */}
+        <div className="flex items-center justify-center gap-2 mb-8">
+          <button
+            onClick={() => setActiveTab('contests')}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer interactive-tap ${
+              activeTab === 'contests'
+                ? 'bg-[#5425A8] text-white shadow-md'
+                : 'bg-white text-[#6F687A] border border-[#E8E2EF] hover:bg-[#FAF8FD]'
+            }`}
+          >
+            Live Hackathons & Arena Contests
+          </button>
+          <button
+            onClick={() => setActiveTab('projects')}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer interactive-tap ${
+              activeTab === 'projects'
+                ? 'bg-[#5425A8] text-white shadow-md'
+                : 'bg-white text-[#6F687A] border border-[#E8E2EF] hover:bg-[#FAF8FD]'
+            }`}
+          >
+            Final-Year Projects & Research Mentorship
+          </button>
+        </div>
 
-                  <h3 className="text-lg font-bold text-[#211B2B]">
-                    {contest.title}
-                  </h3>
-                  <p className="text-xs text-[#6F687A] leading-relaxed">
-                    {contest.tagline}
-                  </p>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs text-[#211B2B]">
-                    <div className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-[#5425A8]" />
-                      <span>Duration: <strong>{contest.duration}</strong></span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <Users className="w-3.5 h-3.5 text-[#5425A8]" />
-                      <span>{contest.participants}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 sm:col-span-2 text-xs font-semibold text-[#5425A8]">
-                      <Award className="w-3.5 h-3.5 text-[#FFD84D]" />
-                      <span>Reward: {contest.prizes}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-1 pt-1">
-                    {contest.topics.map((t) => (
-                      <span key={t} className="text-[10px] font-medium px-2 py-0.5 rounded bg-[#FAF8FD] text-[#6F687A] border border-[#E8E2EF]">
-                        {t}
+        {/* Tab 1: Contests List */}
+        {activeTab === 'contests' && (
+          <div className="space-y-4 max-w-4xl mx-auto">
+            {contests.map((contest) => (
+              <div
+                key={contest.id}
+                className="bg-white rounded-2xl border border-[#E8E2EF] p-6 hover:border-[#5425A8] transition-all duration-150 shadow-xs"
+              >
+                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
+                  <div className="space-y-2 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#F3EDFF] text-[#5425A8] border border-[#E8E2EF]">
+                        {contest.category}
                       </span>
-                    ))}
-                  </div>
-                </div>
+                      <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#FFF8D6] text-[#211B2B] border border-[#FFD84D]/40">
+                        {contest.difficulty}
+                      </span>
+                      <span className="text-xs text-[#6F687A] flex items-center gap-1">
+                        <Timer className="w-3.5 h-3.5" />
+                        Starts in {contest.startsIn}
+                      </span>
+                    </div>
 
-                <div className="w-full lg:w-auto shrink-0 flex flex-col gap-2">
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    onClick={() => setSelectedContest(contest.title)}
-                    rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
-                  >
-                    Register Team Free
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => onNavigate('/')}
-                  >
-                    Practice Problems
-                  </Button>
+                    <h3 className="text-lg font-bold text-[#211B2B]">
+                      {contest.title}
+                    </h3>
+                    <p className="text-xs text-[#6F687A] leading-relaxed">
+                      {contest.tagline}
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs text-[#211B2B]">
+                      <div className="flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5 text-[#5425A8]" />
+                        <span>Duration: <strong>{contest.duration}</strong></span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Users className="w-3.5 h-3.5 text-[#5425A8]" />
+                        <span>{contest.participants}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 sm:col-span-2 text-xs font-semibold text-[#5425A8]">
+                        <Award className="w-3.5 h-3.5 text-[#FFD84D]" />
+                        <span>Reward: {contest.prizes}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-1 pt-1">
+                      {contest.topics.map((t) => (
+                        <span key={t} className="text-[10px] font-medium px-2 py-0.5 rounded bg-[#FAF8FD] text-[#6F687A] border border-[#E8E2EF]">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="w-full lg:w-auto shrink-0 flex flex-col gap-2">
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => setSelectedContest(contest.title)}
+                      rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
+                    >
+                      Register Team Free
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onNavigate('/')}
+                    >
+                      Practice Problems
+                    </Button>
+                  </div>
                 </div>
               </div>
+            ))}
+          </div>
+        )}
+
+        {/* Tab 2: Final-Year Projects & Mentorship */}
+        {activeTab === 'projects' && (
+          <div className="max-w-4xl mx-auto space-y-6">
+            <div className="bg-[#F3EDFF] rounded-2xl border border-purple-200 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="text-base font-extrabold text-[#5425A8] flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-[#FFD84D]" />
+                  <span>Capstone Engineering Project Guidance</span>
+                </h3>
+                <p className="text-xs text-[#6F687A] mt-1 max-w-xl">
+                  Build production-grade projects that impress technical interviewers. Complete with IEEE format documentation, code review sprints, and Scopus/UGC paper publication guidance.
+                </p>
+              </div>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => onNavigate('/partner-mou')}
+                className="font-bold text-xs shrink-0"
+              >
+                Colleges MOU Enquiry
+              </Button>
             </div>
-          ))}
-        </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {FINAL_YEAR_PROJECTS.map((proj) => (
+                <div 
+                  key={proj.id}
+                  className="bg-white rounded-2xl border border-[#E8E2EF] p-5 flex flex-col justify-between card-hover-shadow"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-bold text-[#5425A8] bg-[#F3EDFF] px-2 py-0.5 rounded-full">
+                        {proj.domain}
+                      </span>
+                      <span className="text-[10px] font-bold text-[#211B2B] bg-[#FFF8D6] px-2 py-0.5 rounded-full border border-[#FFD84D]/40">
+                        {proj.complexity}
+                      </span>
+                    </div>
+
+                    <h4 className="font-extrabold text-sm text-[#211B2B] mb-2 leading-snug">
+                      {proj.title}
+                    </h4>
+
+                    <div className="space-y-1.5 my-3 text-[11px] text-[#6F687A]">
+                      <div className="font-bold text-[#211B2B] text-[11px]">Milestones Included:</div>
+                      {proj.milestones.slice(0, 3).map((m, mIdx) => (
+                        <div key={mIdx} className="flex items-start gap-1.5">
+                          <CheckCircle2 className="w-3 h-3 text-[#5425A8] shrink-0 mt-0.5" />
+                          <span className="line-clamp-1">{m}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {proj.paperPublicationSupport && (
+                      <div className="mt-2.5 p-2 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-bold flex items-center gap-1.5">
+                        <FileText className="w-3 h-3 text-emerald-600" />
+                        <span>Research Paper Support Included</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pt-4 mt-4 border-t border-[#E8E2EF]">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      fullWidth
+                      onClick={() => setSelectedProject(proj)}
+                      className="text-xs font-bold bg-white interactive-tap"
+                    >
+                      Project Details & Code Plan →
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
       </div>
 
@@ -261,6 +374,80 @@ export const HackathonsPage: React.FC<HackathonsPageProps> = ({ onNavigate }) =>
         </Modal>
       )}
 
+      {/* Final-Year Project Details Modal */}
+      {selectedProject && (
+        <Modal
+          isOpen={!!selectedProject}
+          onClose={() => setSelectedProject(null)}
+          title={selectedProject.title}
+          subtitle={`Domain: ${selectedProject.domain} • ${selectedProject.complexity}`}
+          maxWidth="lg"
+        >
+          <div className="space-y-4 text-xs">
+            <div>
+              <div className="font-bold text-[#211B2B] uppercase tracking-wider mb-2">
+                4-Stage Milestone Roadmap:
+              </div>
+              <div className="space-y-2">
+                {selectedProject.milestones.map((m, idx) => (
+                  <div key={idx} className="p-2.5 rounded-xl bg-[#FAF8FD] border border-[#E8E2EF] flex items-start gap-2">
+                    <span className="w-5 h-5 rounded-full bg-[#5425A8] text-white flex items-center justify-center font-bold text-[10px] shrink-0">
+                      {idx + 1}
+                    </span>
+                    <span className="text-[#211B2B] font-medium leading-relaxed">{m}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="font-bold text-[#211B2B] uppercase tracking-wider mb-2">
+                Capstone Deliverables:
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {selectedProject.deliverables.map((d, idx) => (
+                  <div key={idx} className="p-2.5 rounded-xl bg-white border border-[#E8E2EF] flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span className="text-[#211B2B] font-semibold">{d}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="p-3 bg-[#F3EDFF] rounded-xl border border-purple-200 flex items-center justify-between">
+              <div>
+                <div className="font-bold text-[#5425A8]">Industry SDE Mentor Allocation</div>
+                <div className="text-[11px] text-[#6F687A]">Weekly sprint check-in & code reviews for engineering batches</div>
+              </div>
+              <span className="px-2.5 py-1 rounded-full bg-white text-[#5425A8] font-bold text-[10px] border border-purple-200">
+                Active Batch
+              </span>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-2 border-t border-[#E8E2EF]">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSelectedProject(null)}
+              >
+                Close
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => {
+                  setSelectedProject(null);
+                  onNavigate('/partner-mou');
+                }}
+              >
+                Request College Allocation
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
+
     </div>
   );
 };
+

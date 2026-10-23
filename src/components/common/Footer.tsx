@@ -53,7 +53,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
 
             <p className="text-xs text-[#A89FB5] leading-relaxed max-w-sm">
-              Placement preparation LMS for engineering colleges. Real company questions, in-browser compilation, and cohort readiness analytics.
+              Placement preparation LMS for engineering colleges across India. Real company questions, in-browser compilation, and cohort readiness analytics. Operated by <strong className="text-white">Xyzon Innovations</strong>.
             </p>
 
             {/* Address & Contacts */}
@@ -96,9 +96,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className={`space-y-2 text-xs text-[#A89FB5] ${openSection === 'students' ? 'block' : 'hidden md:block'}`}>
               <li><button onClick={() => onNavigate('/')} className="hover:text-white transition-colors text-left cursor-pointer">Practice Question Bank</button></li>
               <li><button onClick={() => onNavigate('/dashboard')} className="hover:text-white transition-colors text-left cursor-pointer">Student Dashboard</button></li>
+              <li><button onClick={() => onNavigate('/#certifications')} className="hover:text-white transition-colors text-left cursor-pointer">Domain Certifications</button></li>
               <li><button onClick={() => onNavigate('/student/subscription')} className="hover:text-white transition-colors text-left cursor-pointer">Subscription Plans</button></li>
-              <li><button onClick={() => onNavigate('/hackathons')} className="hover:text-white transition-colors text-left cursor-pointer">Campus Hackathons</button></li>
-              <li><button onClick={() => onNavigate('/#daily-path')} className="hover:text-white transition-colors text-left cursor-pointer">Daily Habits</button></li>
+              <li><button onClick={() => onNavigate('/hackathons')} className="hover:text-white transition-colors text-left cursor-pointer">Campus Hackathons & Projects</button></li>
             </ul>
           </div>
 
@@ -115,9 +115,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className={`space-y-2 text-xs text-[#A89FB5] ${openSection === 'institutions' ? 'block' : 'hidden md:block'}`}>
               <li><button onClick={() => onNavigate('/colleges')} className="hover:text-white transition-colors text-left cursor-pointer">College Placement LMS</button></li>
               <li><button onClick={() => onNavigate('/partner-mou')} className="hover:text-white transition-colors text-left text-white font-medium cursor-pointer">Apply for Campus MOU</button></li>
-              <li><button onClick={() => onNavigate('/colleges')} className="hover:text-white transition-colors text-left cursor-pointer">Batch Analytics Suite</button></li>
+              <li><button onClick={() => onNavigate('/colleges')} className="hover:text-white transition-colors text-left cursor-pointer">NAAC / NBA Placement Audits</button></li>
               <li><button onClick={() => onNavigate('/colleges')} className="hover:text-white transition-colors text-left cursor-pointer">Custom Mock Drives</button></li>
-              <li><a href={`mailto:${COMPANY_INFO.email}?subject=College%20Partnership`} className="hover:text-white transition-colors">Placement Enquiries</a></li>
+              <li><a href={`mailto:${COMPANY_INFO.email}?subject=College%20Partnership`} className="hover:text-white transition-colors">Placement Cell Enquiries</a></li>
             </ul>
           </div>
 
@@ -132,11 +132,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <ChevronDown className={`w-3.5 h-3.5 md:hidden transition-transform ${openSection === 'programmes' ? 'rotate-180' : ''}`} />
             </button>
             <ul className={`space-y-2 text-xs text-[#A89FB5] ${openSection === 'programmes' ? 'block' : 'hidden md:block'}`}>
+              <li><button onClick={() => onNavigate('/bundles/tcs')} className="hover:text-white transition-colors text-left text-[#FFD84D] font-medium cursor-pointer">TCS NQT Master Bundle</button></li>
               <li><button onClick={() => onNavigate('/bundles/infosys')} className="hover:text-white transition-colors text-left cursor-pointer">Infosys InfyTQ Prep</button></li>
               <li><button onClick={() => onNavigate('/bundles/accenture')} className="hover:text-white transition-colors text-left cursor-pointer">Accenture Fast-Track</button></li>
-              <li><button onClick={() => onNavigate('/student/subscription')} className="hover:text-white transition-colors text-left cursor-pointer">TCS NQT Preparation</button></li>
-              <li><button onClick={() => onNavigate('/student/subscription')} className="hover:text-white transition-colors text-left cursor-pointer">Big Tech SDE Sprint</button></li>
-              <li><button onClick={() => onNavigate('/student/subscription')} className="hover:text-white transition-colors text-left text-[#FFD84D] font-medium cursor-pointer">Super Dream Pack</button></li>
+              <li><button onClick={() => onNavigate('/#certifications')} className="hover:text-white transition-colors text-left cursor-pointer">QR-Verifiable Certifications</button></li>
+              <li><button onClick={() => onNavigate('/student/subscription')} className="hover:text-white transition-colors text-left cursor-pointer">Super Dream 20+ LPA</button></li>
             </ul>
           </div>
 

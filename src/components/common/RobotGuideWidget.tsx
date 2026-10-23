@@ -59,6 +59,12 @@ const ROUTE_TIPS: Record<string, ContextTip> = {
     actionText: 'Compare Plans',
     actionPath: '/student/subscription'
   },
+  '/bundles/tcs': {
+    title: 'TCS NQT 2025–2026',
+    message: 'Crack India’s largest campus test. Target Ninja (3.36 LPA), Digital (7.0 LPA), and Prime (9.0 LPA) with in-browser compilation!',
+    actionText: 'Solve TCS Problems',
+    actionPath: '/bundles/tcs'
+  },
   '/bundles/infosys': {
     title: 'Infosys InfyTQ & SP Prep',
     message: 'Targeted preparation for Infosys Specialist Programmer (9.5 LPA) and SE roles.',

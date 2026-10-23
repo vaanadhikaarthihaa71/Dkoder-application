@@ -6,6 +6,7 @@ import { FilterToolbar, FilterState } from '../components/home/FilterToolbar';
 import { QuestionStream } from '../components/home/QuestionStream';
 import { CodingLabModal } from '../components/home/CodingLabModal';
 import { CareerTracks } from '../components/home/CareerTracks';
+import { CertificationsSection } from '../components/home/CertificationsSection';
 import { Leaderboard } from '../components/home/Leaderboard';
 import { PricingGrid } from '../components/home/PricingGrid';
 import { DailyPath } from '../components/home/DailyPath';
@@ -143,7 +144,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         onNavigate={onNavigate}
       />
 
-      {/* 6. Leaderboard Preview */}
+      {/* 6. Domain Certifications with QR Verifiable Credentials */}
+      <CertificationsSection
+        onNavigate={onNavigate}
+      />
+
+      {/* 7. Leaderboard Preview */}
       <Leaderboard />
 
       {/* 7. Pricing Comparison */}

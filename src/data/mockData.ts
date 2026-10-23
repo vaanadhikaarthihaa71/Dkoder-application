@@ -4,23 +4,28 @@ import {
   StudentRanking, 
   PricingPlan, 
   AnxietyQuery, 
-  DailyTask 
+  DailyTask,
+  CertificationTrack,
+  FinalYearProjectTrack
 } from '../types';
 
 export const COMPANY_INFO = {
   name: 'DKODER',
   legalName: 'DKoder Placement Technologies',
+  operatedBy: 'Xyzon Innovations',
+  operatorCity: 'Chennai, Tamil Nadu, India',
   tagline: 'The Placement LMS for Engineering Colleges Across India',
   address: 'Campus 1A, No. 143, Dr. M.G.R. Road, Perungudi, Chennai 600096, Tamil Nadu, India',
   email: 'support@dkoder.co.in',
   phone: '+91 87542 00247',
   whatsappUrl: 'https://wa.me/918754200247?text=Hello%20DKODER%20Team%2C%20I%20have%20an%20enquiry%20regarding%20campus%20preparation',
   credentials: [
-    'Placement LMS Platform for Engineering Colleges across India',
+    'Placement LMS Platform for Engineering Colleges across India (Operated by Xyzon Innovations)',
     'Real Company-Tagged Placement Questions (TCS NQT, InfyTQ, Accenture)',
     'Live Browser Coding Lab with Real-Time Compilers',
     'AI Report Cards & Frequency-Based Question Filtering',
-    'Campus MOU Integration for Institutional Placement Cells'
+    'Campus MOU Integration for Institutional Placement Cells',
+    'QR-Verifiable Domain Certifications & Mentored Project Tracks'
   ]
 };
 
@@ -600,3 +605,218 @@ export const INITIAL_DAILY_TASKS: DailyTask[] = [
   { id: 'task-3', title: 'Practise 1 timed coding challenge in browser lab', category: 'DSA', estimatedMinutes: 25, completed: false },
   { id: 'task-4', title: 'Revise 1 Core CS concept: OS Deadlocks & Semaphores', category: 'Concept', estimatedMinutes: 15, completed: false }
 ];
+
+export const CERTIFICATION_TRACKS: CertificationTrack[] = [
+  {
+    id: 'cert-cybersecurity',
+    title: 'Cybersecurity & Defensive Engineering',
+    domain: 'Cybersecurity',
+    level: 'Industry Ready',
+    durationWeeks: 8,
+    totalModules: 12,
+    handsOnLabs: 24,
+    sampleCredentialId: 'DK-SEC-2026-8841',
+    description: 'Practical training on network security, OWASP Top 10 vulnerabilities, penetration fundamentals, and SOC incident triage with tamper-proof QR certification.',
+    skillsAcquired: ['Network Packet Analysis (Wireshark)', 'OWASP Top 10 Remediation', 'Linux Security Hardening', 'Cryptographic Primitives'],
+    syllabus: [
+      { title: 'Module 1: Foundations of Ethical Defense', topics: ['TCP/IP security model', 'Reconnaissance & footprinting', 'Port scanning & banner grabbing'] },
+      { title: 'Module 2: Web Application Vulnerabilities', topics: ['SQL Injection & XSS exploitation', 'CSRF & broken authentication', 'Secure coding safeguards'] },
+      { title: 'Module 3: Defensive Ops & Blue Team', topics: ['SIEM log analysis', 'Incident containment', 'Hardening enterprise Linux servers'] }
+    ],
+    iconName: 'ShieldAlert'
+  },
+  {
+    id: 'cert-cloud-devops',
+    title: 'Cloud Architecture & DevOps Systems',
+    domain: 'Cloud & DevOps',
+    level: 'Advanced',
+    durationWeeks: 10,
+    totalModules: 14,
+    handsOnLabs: 30,
+    sampleCredentialId: 'DK-CLD-2026-3190',
+    description: 'Enterprise deployment pipelines, AWS and GCP compute/storage services, container orchestration with Kubernetes, and Infrastructure as Code with Terraform.',
+    skillsAcquired: ['AWS Core Infrastructure', 'Docker & Containerization', 'Kubernetes Deployments', 'CI/CD with GitHub Actions', 'Terraform HCL'],
+    syllabus: [
+      { title: 'Module 1: Cloud Core & IAM Security', topics: ['VPC subnetting & routing', 'IAM roles & least-privilege', 'S3 & compute auto-scaling'] },
+      { title: 'Module 2: Containerization & Microservices', topics: ['Multi-stage Docker builds', 'Kubernetes Pods & Services', 'Ingress controllers & TLS'] },
+      { title: 'Module 3: Continuous Delivery Pipelines', topics: ['Automated test runners', 'Zero-downtime rollouts', 'Terraform provisioning'] }
+    ],
+    iconName: 'Cloud'
+  },
+  {
+    id: 'cert-programming',
+    title: 'Modern Full-Stack & Systems Engineering',
+    domain: 'Programming',
+    level: 'Industry Ready',
+    durationWeeks: 12,
+    totalModules: 16,
+    handsOnLabs: 36,
+    sampleCredentialId: 'DK-DEV-2026-5524',
+    description: 'Production-ready full-stack software development with TypeScript, React, Next.js, Node.js microservices, PostgreSQL indexing, and distributed cache design.',
+    skillsAcquired: ['TypeScript Strict Architecture', 'Next.js App Router & SSR', 'PostgreSQL Query Optimization', 'Redis Caching & Queues', 'REST & GraphQL APIs'],
+    syllabus: [
+      { title: 'Module 1: Systems-Level TypeScript & React', topics: ['Advanced generics & utility types', 'State machine patterns', 'Optimistic UI updates'] },
+      { title: 'Module 2: Scalable Node.js Backend & DBs', topics: ['Connection pooling & migrations', 'ACID transactions & locking', 'JWT security & rate limiting'] },
+      { title: 'Module 3: Distributed Architectures', topics: ['Event-driven messaging', 'Redis pub/sub', 'Horizontal scaling patterns'] }
+    ],
+    iconName: 'Code2'
+  },
+  {
+    id: 'cert-data-ai',
+    title: 'Data Science & Applied Generative AI',
+    domain: 'Data & AI',
+    level: 'Advanced',
+    durationWeeks: 10,
+    totalModules: 14,
+    handsOnLabs: 28,
+    sampleCredentialId: 'DK-DAT-2026-9218',
+    description: 'Transform raw data into predictive intelligence and production LLM applications using Python, Scikit-Learn, PyTorch, RAG vector search, and model fine-tuning.',
+    skillsAcquired: ['Python Data Wrangling', 'Statistical Feature Engineering', 'Deep Learning PyTorch', 'Vector Databases & Embeddings', 'RAG AI Applications'],
+    syllabus: [
+      { title: 'Module 1: Exploratory Analysis & Statistics', topics: ['Pandas vectorized ops', 'Hypothesis testing & p-values', 'Dimensionality reduction (PCA)'] },
+      { title: 'Module 2: Machine Learning Pipelines', topics: ['Ensemble models (XGBoost)', 'Model evaluation & ROC/AUC', 'Hyperparameter tuning'] },
+      { title: 'Module 3: LLM Engineering & RAG', topics: ['Embedding spaces & ChromaDB', 'LangChain orchestration', 'Prompt engineering & guardrails'] }
+    ],
+    iconName: 'BrainCircuit'
+  },
+  {
+    id: 'cert-networking',
+    title: 'Enterprise Networking & Secure Infrastructure',
+    domain: 'Networking',
+    level: 'Intermediate',
+    durationWeeks: 8,
+    totalModules: 10,
+    handsOnLabs: 20,
+    sampleCredentialId: 'DK-NET-2026-1142',
+    description: 'Core telecommunications, OSI reference layers, BGP/OSPF dynamic routing, VLAN segmentation, and enterprise firewall access lists.',
+    skillsAcquired: ['Subnetting & CIDR calculations', 'OSPF & BGP Routing', 'VLANs & Trunking protocols', 'Network Packet Tracing', 'Firewall ACL Rules'],
+    syllabus: [
+      { title: 'Module 1: L2/L3 Protocols & Addressing', topics: ['IPv4/IPv6 transition', 'Subnetting without calculator', 'ARP & DHCP discovery'] },
+      { title: 'Module 2: Dynamic Routing & Switching', topics: ['Spanning Tree Protocol (STP)', 'Link aggregation (LACP)', 'OSPF multi-area design'] },
+      { title: 'Module 3: Enterprise Perimeter Security', topics: ['Stateful packet inspection', 'NAT & port forwarding', 'VPN tunneling (IPsec)'] }
+    ],
+    iconName: 'Network'
+  },
+  {
+    id: 'cert-strategy',
+    title: 'Quantitative Problem Solving & Strategic Aptitude',
+    domain: 'Strategy',
+    level: 'Foundational',
+    durationWeeks: 6,
+    totalModules: 8,
+    handsOnLabs: 18,
+    sampleCredentialId: 'DK-STR-2026-7730',
+    description: 'High-speed mathematical aptitude, logical deductions, data interpretation charts, and business problem-solving for top campus consulting and analyst rounds.',
+    skillsAcquired: ['Vedic Math Speed Shortcuts', 'Data Interpretation Tables & Graphs', 'Syllogisms & Analytical Puzzles', 'Business Case Estimation'],
+    syllabus: [
+      { title: 'Module 1: Quantitative Speed Fundamentals', topics: ['Percentages, Profit & Loss shortcuts', 'Time & Work pipelines', 'Permutation & Probability'] },
+      { title: 'Module 2: Logical Reasoning & Puzzles', topics: ['Circular & linear arrangements', 'Blood relations & coding-decoding', 'Critical verbal logic'] },
+      { title: 'Module 3: Data Interpretation & Case Analysis', topics: ['Multi-bar & radar graph breakdowns', 'Market sizing guestimates', 'Consulting frameworks'] }
+    ],
+    iconName: 'LineChart'
+  }
+];
+
+export const FINAL_YEAR_PROJECTS: FinalYearProjectTrack[] = [
+  {
+    id: 'proj-1',
+    title: 'Decentralized Academic Credential Verification System',
+    domain: 'Blockchain & Web3',
+    complexity: 'Research Grade',
+    milestones: [
+      'Phase 1: Solidity smart contract design & local Hardhat test suite',
+      'Phase 2: IPFS metadata storage integration & cryptographic signing',
+      'Phase 3: React verification portal with QR validation',
+      'Phase 4: Scopus/IEEE research paper drafting & mentor review'
+    ],
+    deliverables: ['Production-ready GitHub repo', 'Complete 60-page IEEE format project report', 'Live deployment URL', 'Accepted paper manuscript draft'],
+    paperPublicationSupport: true,
+    industryMentorAssigned: true
+  },
+  {
+    id: 'proj-2',
+    title: 'Autonomous Real-Time Defect Detection in Manufacturing using Edge AI',
+    domain: 'Computer Vision & IoT',
+    complexity: 'High Impact',
+    milestones: [
+      'Phase 1: Annotated industrial dataset creation & preprocessing',
+      'Phase 2: YOLOv8 / MobileNet quantization for Raspberry Pi edge devices',
+      'Phase 3: Flask microservice with WebSocket live telemetry',
+      'Phase 4: Conference publication & patent search documentation'
+    ],
+    deliverables: ['Trained model weights (.onnx & .tflite)', 'Hardware schematics & Bill of Materials', 'Executive project presentation deck'],
+    paperPublicationSupport: true,
+    industryMentorAssigned: true
+  },
+  {
+    id: 'proj-3',
+    title: 'High-Throughput Algorithmic Trading Backtester & Risk Engine',
+    domain: 'FinTech & Distributed Systems',
+    complexity: 'Standard',
+    milestones: [
+      'Phase 1: Tick-data streaming ingestion with Apache Kafka & ClickHouse',
+      'Phase 2: Event-driven backtesting execution engine in Go / Rust',
+      'Phase 3: Real-time risk attribution dashboard (Sharpe, Drawdown, VaR)',
+      'Phase 4: Capstone demo recording for Tier-1 Quant & HFT placement rounds'
+    ],
+    deliverables: ['Ultra-low latency codebase', 'Docker Compose cluster config', 'Portfolio documentation for recruiters'],
+    paperPublicationSupport: false,
+    industryMentorAssigned: true
+  }
+];
+
+export const TCS_NQT_DATA = {
+  examName: 'TCS National Qualifier Test (NQT)',
+  batchYear: '2025 - 2026 Batch',
+  salaryBands: [
+    { tier: 'Ninja', package: '3.36 - 3.6 LPA', testFocus: 'Foundation Cognitive & Standard Coding' },
+    { tier: 'Digital', package: '7.0 - 7.5 LPA', testFocus: 'Advanced Quantitative, Reasoning & DSA Coding' },
+    { tier: 'Prime', package: '9.0 - 9.5 LPA', testFocus: 'Complex Problem Solving, Dynamic Programming & System Optimization' }
+  ],
+  examStructure: [
+    {
+      sectionName: 'Part A: Foundation Section (Cognitive)',
+      duration: '75 Minutes',
+      subSections: [
+        { name: 'Numerical Ability', questions: 20, timeMins: 25 },
+        { name: 'Reasoning Ability', questions: 20, timeMins: 25 },
+        { name: 'Verbal Ability', questions: 25, timeMins: 25 }
+      ]
+    },
+    {
+      sectionName: 'Part B: Advanced Section (Technical & Coding)',
+      duration: '90 Minutes',
+      subSections: [
+        { name: 'Advanced Quantitative & Reasoning', questions: 15, timeMins: 25 },
+        { name: 'Advanced Coding (2 Algorithmic Problems)', questions: 2, timeMins: 65 }
+      ]
+    }
+  ],
+  verifiedQuestions: [
+    {
+      title: 'Subarray with Given Sum and Maximum Length',
+      difficulty: 'Medium',
+      format: 'Coding',
+      tier: 'Digital / Prime',
+      timeLimitSec: 2,
+      summary: 'Find the starting and ending indices of the longest contiguous subarray whose elements sum to target K. Handle O(N) linear time with hash maps.'
+    },
+    {
+      title: 'TCS Matrix Ring Rotation In-Place',
+      difficulty: 'Medium',
+      format: 'Coding',
+      tier: 'Ninja / Digital',
+      timeLimitSec: 1,
+      summary: 'Rotate elements of an N x M matrix layer-by-layer anti-clockwise by R steps without auxiliary 2D arrays.'
+    },
+    {
+      title: 'Lexicographically Smallest String After K Swaps',
+      difficulty: 'Hard',
+      format: 'Coding',
+      tier: 'Prime (9 LPA)',
+      timeLimitSec: 2,
+      summary: 'Given an array of digits, find the smallest permutation reachable in at most K adjacent swaps using greedy priority indexing.'
+    }
+  ]
+};
+
